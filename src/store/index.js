@@ -1,15 +1,17 @@
-import { createStore } from 'redux';
+// import { createStore } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
+import counterReducer from './counter';
+import authReducer from './auth';
 
-const counterReducer = (state = { counter: 0 }, action) => {
-  if (action.type === 'increment') {
-    return { counter: state.counter + 1 };
-  }
-  if (action.type === 'decrement') {
-    return { counter: state.counter - 1 };
-  }
-  return state;
-};
-
-const store = createStore(counterReducer);
+// Works but we could need more slices. Easier with configureStore
+// const store = createStore(counterSlice.reducer);
+const store = configureStore({
+  // reducer: counterSlice.reducer, // singular! reducer! value can be one reducer
+  // Or an object where we map reducers: key - value=different reducer functions
+  reducer: {
+    counter: counterReducer,
+    auth: authReducer,
+  },
+});
 
 export default store;
