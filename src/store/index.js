@@ -1,38 +1,17 @@
 // import { createStore } from 'redux';
-import { createSlice, configureStore } from '@reduxjs/toolkit';
-
-const initialState = { counter: 0, showCounter: true };
-
-const counterSlice = createSlice({
-  name: 'counter',
-  initialState,
-  reducers: {
-    increment(state) {
-      state.counter++;
-    },
-    decrement(state) {
-      state.counter--;
-    },
-    // Action still exists as param, we just don't need to specify if not needed
-    increase(state, action) {
-      state.counter = state.counter + action.payload;
-    },
-    toggleCounter(state) {
-      state.showCounter = !state.showCounter;
-    },
-  },
-});
+import { configureStore } from '@reduxjs/toolkit';
+import counterReducer from './counter';
+import authReducer from './auth';
 
 // Works but we could need more slices. Easier with configureStore
 // const store = createStore(counterSlice.reducer);
 const store = configureStore({
-  reducer: counterSlice.reducer, // singular! reducer! value can be one reducer
+  // reducer: counterSlice.reducer, // singular! reducer! value can be one reducer
   // Or an object where we map reducers: key - value=different reducer functions
-  // reducer: {
-  //  counter: counterSlice.reducer,
-  // },
+  reducer: {
+    counter: counterReducer,
+    auth: authReducer,
+  },
 });
 
-// To access reducers? via 'actions' object on slice
-export const counterActions = counterSlice.actions;
 export default store;
